@@ -1,3 +1,4 @@
+USE defaultdb;
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   full_name VARCHAR(120) NOT NULL,
