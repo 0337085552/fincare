@@ -10,7 +10,27 @@ const app = express();
 const port = Number(process.env.PORT || 5000);
 
 app.use(helmet({ crossOriginResourcePolicy: false }));
-app.use(cors({ origin: process.env.FRONTEND_URL || '*'}));
+const allowedOrigins = [
+  'http://localhost:3000',
+  process.env.FRONTEND_URL
+].filter(Boolean);
+
+app.use(cors({
+  origin(origin, callback) {
+    if (!origin) return callback(null, true);
+
+    const isAllowed =
+      allowedOrigins.includes(origin) ||
+      origin.endsWith('.vercel.app');
+
+    if (isAllowed) {
+      return callback(null, true);
+    }
+
+    return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true
+}));
 app.use(express.json());
 
 app.get('/', (req, res) => ok(res, { name: 'FinCare API', version: '1.0.0' }));
