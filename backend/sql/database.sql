@@ -1,7 +1,3 @@
-DROP DATABASE IF EXISTS fincare_db;
-CREATE DATABASE fincare_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE fincare_db;
-
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   full_name VARCHAR(120) NOT NULL,
