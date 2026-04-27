@@ -1,5 +1,8 @@
 const app = document.querySelector('#app');
-const API_BASE = localStorage.getItem('API_BASE') || 'http://localhost:5000/api';
+const API_BASE =
+  localStorage.getItem('API_BASE') ||
+  import.meta.env.VITE_API_BASE_URL ||
+  'http://localhost:5000/api';
 
 const formatMoney = value => new Intl.NumberFormat('vi-VN').format(Number(value || 0)) + 'đ';
 const formatDate = value => value ? new Date(value).toLocaleDateString('vi-VN') : '--/--/----';
