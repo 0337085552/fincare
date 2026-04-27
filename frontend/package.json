@@ -1,0 +1,12 @@
+{
+  "name": "frontend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Frontend quản lí chi tiêu bằng HTML, CSS và JavaScript.",
+  "scripts": {
+    "dev": "node server.js",
+    "start": "node server.js"
+  },
+  "keywords": ["html", "css", "javascript", "expense", "budget"],
+  "license": "MIT"
+}
