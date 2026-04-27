@@ -1,12 +1,16 @@
 {
-  "name": "frontend",
+  "name": "fincare-frontend",
   "version": "1.0.0",
   "private": true,
-  "description": "Frontend quản lí chi tiêu bằng HTML, CSS và JavaScript.",
+  "type": "module",
   "scripts": {
-    "dev": "node server.js",
-    "start": "node server.js"
+    "dev": "vite --host 0.0.0.0 --port 3000",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "keywords": ["html", "css", "javascript", "expense", "budget"],
-  "license": "MIT"
+  "dependencies": {
+    "@vitejs/plugin-react": "latest",
+    "vite": "latest"
+  },
+  "devDependencies": {}
 }
