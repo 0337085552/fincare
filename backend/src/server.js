@@ -72,20 +72,10 @@ app.get('/', (req, res) => ok(res, { name: 'FinCare API', version: '1.0.0' }));
 
 app.get('/api/health', async (req, res) => {
   try {
-    const [[dbInfo]] = await pool.query(`
-      SELECT DATABASE() AS database_name, @@hostname AS host_name, @@port AS port
-    `);
-
-    const [columns] = await pool.query(`
-      SHOW COLUMNS FROM transactions LIKE 'receipt%'
-    `);
-
-    ok(res, {
-      dbInfo,
-      receiptColumns: columns
-    });
+    await pool.query('SELECT 1');
+    ok(res, { database: 'connected' }, 'API đang hoạt động');
   } catch (error) {
-    fail(res, 500, 'Không kiểm tra được database', error.message);
+    fail(res, 500, 'Không kết nối được MySQL', error.message);
   }
 });
 

@@ -1,16 +1,25 @@
 require('dotenv').config({ override: true });
-const { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } = require('@aws-sdk/client-s3');
 
-const s3 = new S3Client({
-  region: process.env.AWS_REGION,
-  credentials: {
-    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-  }
-});
+const {
+  S3Client,
+  PutObjectCommand,
+  GetObjectCommand,
+  DeleteObjectCommand
+} = require('@aws-sdk/client-s3');
 
-const bucketName = process.env.AWS_S3_BUCKET;
-      console.log('AWS_S3_BUCKET =', bucketName);
+function getS3Client() {
+  return new S3Client({
+    region: process.env.AWS_REGION,
+    credentials: {
+      accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+      secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+    }
+  });
+}
+
+function getBucketName() {
+  return process.env.AWS_S3_BUCKET;
+}
 
 async function uploadReceiptToS3(file) {
   if (!file) return null;
@@ -22,9 +31,9 @@ async function uploadReceiptToS3(file) {
 
   const key = `receipts/${Date.now()}-${Math.round(Math.random() * 1e9)}-${safeOriginalName}`;
 
-  await s3.send(
+  await getS3Client().send(
     new PutObjectCommand({
-      Bucket: bucketName,
+      Bucket: getBucketName(),
       Key: key,
       Body: file.buffer,
       ContentType: file.mimetype
@@ -39,9 +48,9 @@ async function uploadReceiptToS3(file) {
 }
 
 async function getReceiptFromS3(key) {
-  return s3.send(
+  return getS3Client().send(
     new GetObjectCommand({
-      Bucket: bucketName,
+      Bucket: getBucketName(),
       Key: key
     })
   );
@@ -50,9 +59,9 @@ async function getReceiptFromS3(key) {
 async function deleteReceiptFromS3(key) {
   if (!key) return;
 
-  await s3.send(
+  await getS3Client().send(
     new DeleteObjectCommand({
-      Bucket: bucketName,
+      Bucket: getBucketName(),
       Key: key
     })
   );
