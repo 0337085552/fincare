@@ -1,4 +1,5 @@
 USE defaultdb;
+
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   full_name VARCHAR(120) NOT NULL,
@@ -58,6 +59,9 @@ CREATE TABLE transactions (
   wallet_id INT NULL,
   budget_id INT NULL,
   note TEXT NULL,
+  receipt_key VARCHAR(500) NULL,
+  receipt_name VARCHAR(255) NULL,
+  receipt_mime VARCHAR(100) NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (category_id) REFERENCES categories(id) ON DELETE SET NULL,
   FOREIGN KEY (wallet_id) REFERENCES wallets(id) ON DELETE SET NULL,
