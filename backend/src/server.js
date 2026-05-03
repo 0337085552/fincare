@@ -469,6 +469,18 @@ app.get('/api/receipts/:key(*)', async (req, res) => {
   }
 });
 
+app.get('/api/debug/env', (req, res) => {
+  ok(res, {
+    DB_HOST: process.env.DB_HOST,
+    DB_HOST_JSON: JSON.stringify(process.env.DB_HOST),
+    DB_HOST_LENGTH: process.env.DB_HOST?.length,
+    DB_PORT: process.env.DB_PORT,
+    DB_USER: process.env.DB_USER,
+    DB_NAME: process.env.DB_NAME,
+    DB_SSL: process.env.DB_SSL
+  });
+});
+
 app.use((req, res) => fail(res, 404, 'Không tìm thấy API'));
 
 app.listen(port, () => {
